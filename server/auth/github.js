@@ -10,18 +10,21 @@ passport.use(new GitHubStrategy({
     clientSecret: config.github.clientSecret,
     callbackURL: config.github.callbackURL,
 }, (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
     let searchQuery = {
-        name: profile.displayName
+        //name: profile.displayName,
+        githubID: profile.id,
     };
 
     let updates = {
         name: profile.displayName,
-        someID: profile.id,
-    }
+        githubID: profile.id,
+        githubProfile: profile._json,
+    };
 
     let options = {
         upsert: true,
-    }
+    };
 
     User.findOneAndUpdate(searchQuery, updates, options, (err, user) => {
         if (err) return done(err);

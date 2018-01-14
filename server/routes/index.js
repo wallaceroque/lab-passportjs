@@ -8,10 +8,10 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', (req, res, next) => res.send('Go back and register'));
 
-router.get('/auth/github', passportGithub.authenticate('github', { scope: [ 'user:email repo' ] }));
+router.get('/auth/github', passportGithub.authenticate('github', { scope: [ 'read:user' ] }));
 
 router.get('/auth/github/callback', 
-  passportGithub.authenticate('github', { failureRedirec: '/login' }), (req, res) => {
+  passportGithub.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
     // Successful authentication
     res.json(req.user);
 
